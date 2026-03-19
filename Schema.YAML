@@ -1,8 +1,88 @@
-# 股票表
-{
-  "symbol": "string",   
-  "name": "string",
-  "market": "string",        
-  "industry": "string|null",
-  "created_at": "datetime"
+# 股票基础信息
+{ 
+    "table_name": "stocks",
+    "symbol": "string",   
+    "name": "string",
+    "market": "string",        
+    "industry": "string|null",
+    "created_at": "datetime"
 }
+
+# 市场数据
+{
+    "symbol": "string",
+    "timeframe": "string",     // daily / monthly
+    "timestamp": "date",       // YYYY-MM-DD
+    "open": "float",
+    "high": "float",
+    "low": "float",
+    "close": "float",
+    "volume": "float",
+    "amount": "float|null",    // 成交额（预留）
+    "created_at": "datetime"
+}
+# 指标数据
+{
+    "symbol": "string",
+    "timeframe": "string",
+    "timestamp": "date",
+    "ma5": "float|null",
+    "ma10": "float|null",
+    "ma20": "float|null",
+    "macd_dif": "float|null",
+    "macd_dea": "float|null",
+    "macd_hist": "float|null",
+    "rsi": "float|null",
+    "created_at": "datetime"
+}
+# 分析任务
+{
+    "task_id": "string",        // UUID
+    "symbols": "json",          // ["000001", "600519"]
+    "timeframe": "string",
+    "analysis_date": "date",
+    "status": "string",         // pending / done
+    "created_at": "datetime"
+}
+# 分析快照
+{
+    "analysis_id": "string",
+    "task_id": "string",
+    "symbol": "string",
+    "timeframe": "string",
+    "timestamp": "date",
+    "indicator_summary": "json",   // 语义层输出
+    "llm_output": "text",
+    "suggestion": "string",        // buy / sell / hold
+    "confidence": "float",         // 0~1
+    "model_name": "string|null",
+    "created_at": "datetime"
+}
+# 回测结果
+{
+    "analysis_id": "string",
+    "eval_days": "int",            // 比如 7 / 30 天
+    "future_return": "float",
+    "max_drawdown": "float|null",
+    "is_success": "boolean",
+    "evaluated_at": "datetime"
+}
+# 文件映射存储
+data/
+├── market_data/
+├── indicator/
+├── analysis/
+├── backtest/
+# 命名规则
+{symbol}_{timeframe}.jsonl
+示例：
+000001_daily.jsonl
+000001_monthly.jsonl
+
+stock_quant/
+
+├── data_source/
+├── indicator/
+├── storage/
+├── analysis/
+└── main.py
