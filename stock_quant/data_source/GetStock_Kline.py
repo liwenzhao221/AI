@@ -1,4 +1,7 @@
 #! /usr/bin/env python3
+"""
+该程序没找到最好的方式避开数据获取不到的问题，好像被拉黑了，但有没有全部拉黑的情况
+"""
 import akshare as ak
 import time
 from pprint import pprint
@@ -42,7 +45,7 @@ def GetStock_Kline(symbol):
     for i in range(max_retries):
         try:
             # 获取当日行情
-            stock_zh_a_hist_df = ak.stock_zh_a_hist(symbol, period="daily", start_date="20260310", end_date='20260323', adjust="qfq")
+            stock_zh_a_hist_df = ak.stock_zh_a_hist(symbol, period="daily", start_date="20260324", end_date='20260324', adjust="qfq")
             
             # 只要请求成功（不抛异常），我们就认为这次尝试完成了
             if stock_zh_a_hist_df is not None:

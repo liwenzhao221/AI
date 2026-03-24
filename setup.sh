@@ -21,4 +21,13 @@ source venv/bin/activate
 pip install --upgrade pip
 pip install -r requirements.txt
 
+# 3. 安装 Playwright 浏览器及其系统依赖 (如果项目中使用了 Playwright)
+if pip list | grep -q "playwright"; then
+    echo "正在安装 Playwright 浏览器和系统依赖..."
+    # 安装浏览器内核
+    ./venv/bin/playwright install chromium
+    # 安装 Linux 系统缺失的库 (可能需要 sudo)
+    sudo ./venv/bin/playwright install-deps
+fi
+
 echo "环境配置完成！"
