@@ -6,6 +6,7 @@ from io import StringIO
 import random
 from datetime import datetime
 
+# 异步抓取股票新闻正文和表格数据
 async def fetch_finance_data(url):
     async with async_playwright() as p:
         # 1. 启动无头浏览器 (像真人一样打开网页)
@@ -47,8 +48,7 @@ async def fetch_finance_data(url):
             await browser.close()
             return None, []
 
-async def main():
-    target_url = "https://finance.eastmoney.com/a/202603093666128049.html"
+async def main(target_url):
     content, tables = await fetch_finance_data(target_url)
     
     print("\n--- [1. 核心文字摘要] ---")
@@ -62,6 +62,9 @@ async def main():
             print(df.head(10)) # 打印前10行主力净流入数据
             df.to_csv(f"cpo_data{datetime.now().strftime('%Y%m%d')}-{i}.csv")
 
-if __name__ == "__main__":
-    asyncio.run(main())
+
+# 测试阶段代码，暂时不需要了
+# if __name__ == "__main__":
+#     # 这里最终要更换为从 GetStock_Infomation.py 中获取的股票新闻链接
+#     asyncio.run(main("https://finance.eastmoney.com/a/202603093666128049.html"))
 

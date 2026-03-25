@@ -68,7 +68,7 @@ if __name__ == "__main__":
     # 开始检测
     print('开始监控行情，已开启Headers伪装模式')
     while True:
-        GetStock_Kline("002436")
+        GetStock_Kline("600644")
         # 时间变得随机一些
         sleep_time = random.uniform(5, 10)
         print(f'预计休息{sleep_time:.2f}秒')
