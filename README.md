@@ -31,3 +31,6 @@ chmod +x setup.sh
    source venv/bin/activate
    pip install -r requirements.txt
    ```
+“原生 SDK” 和 “LangChain 框架” 之间的关系：
+openai.OpenAI：这是 OpenAI 官方提供的“毛坯房”工具（原生 SDK）。它直接和 API 通信，你要自己管理对话历史、自己解析返回的 JSON、自己处理复杂的逻辑。
+ChatOpenAI (来自 LangChain)：这是基于原生 SDK 封装好的“精装修”框架。它把 OpenAI 的功能变成了 LangChain 体系里的一个“组件”，让你能更方便地实现“新闻抓取 -> 提取 -> 总结”这种多步骤的流水线。

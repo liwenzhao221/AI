@@ -3,18 +3,19 @@ from llm_model import process_with_llm
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # 导入必要的模块
-def handle_news():
-    # 加载新闻数据
-    news_data = load_news()
-    
-    # 调用LLM模型处理新闻数据
-    result = process_with_llm(news_data)
-    
-    # 返回处理结果
-    return result
+from langchain.tools import tool
+import pandas as pd
+import os
 
-if __name__ == "__main__":
-    # 主函数入口
-    output = handle_news()
-    print("处理完成：", output)
+@tool
+def read_local_news_csv():
+    """读取本地存储的最新财经新闻 CSV 文件内容。"""
+    # 这里逻辑：找当前目录下最新的那个 CSV
+    files = [f for f in os.listdir('.') if f.startswith('财经精选_') and f.endswith('.csv')]
+    if not files:
+        return "没有找到新闻文件，请先运行抓取程序。"
+    
+    latest_file = sorted(files)[-1]
+    df = pd.read_csv(latest_file)
+    return df.head(10).to_string() # 返回前10条给 AI 读
 
