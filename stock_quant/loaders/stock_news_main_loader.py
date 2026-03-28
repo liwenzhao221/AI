@@ -16,6 +16,7 @@ def Get_news_main_cx():
     """
     try:
         stock_news_main_cx_df = ak.stock_news_main_cx()
+        print(stock_news_main_cx_df)
         return stock_news_main_cx_df
     except Exception as e:
         print(f"获取财经早餐失败: {e}")
@@ -51,9 +52,9 @@ if __name__ == "__main__":
     # 1. 调用获取数据函数
     news_df = Get_news_main_cx()
     
-    # 2. 调用持久化函数
-    if news_df is not None:
-        Save_news_to_csv(news_df)
+#     # # 2. 调用持久化函数
+#     # if news_df is not None:
+#     #     Save_news_to_csv(news_df)
 
 
        

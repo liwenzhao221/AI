@@ -14,7 +14,20 @@ def get_llm():
         api_key="sk-i5lkQOkbqVkcDsKh01D8Ee84Ac85433fB57bD39d67B1C8A8",
         base_url="https://aihubmix.com/v1",
     )
+from langchain_ollama import OllamaLLM  # 使用最新的 langchain_ollama 库支持 Ollama
 
-llm = get_llm()
+# 定义一个函数，用于获取本地 Ollama 模型实例
+def get_ollama_llm(model_name: str = "qwen3.5:9b"):
+    """
+    获取本地 Ollama 模型实例
+    :param model_name: Ollama 模型名称，默认为 qwen3.5:9b
+    :return: OllamaLLM 实例
+    """
+    return OllamaLLM(model=model_name, temperature=0.7, verbose=True)
+
+# llm = get_llm()
 # response = llm.invoke("你好，请自我介绍")
 # print(response.content)
+llm_ollama = get_ollama_llm()
+response = llm_ollama.invoke("为啥我用python调用你，感觉好慢才能得到回复呢")
+print(response)

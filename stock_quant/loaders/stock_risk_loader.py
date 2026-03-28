@@ -40,16 +40,16 @@ def GetStockRiskAlertBoard():
     except Exception as e:
         print(f"获取风险警示板块失败: {e}")
         return f'获取风险警示百块失败：{e}'
-if __name__ == "__main__":
-    # 获取风险警示板块数据
-    risk_board_df = GetStockRiskAlertBoard()
-    print(type(risk_board_df))
-    if isinstance(risk_board_df, pd.DataFrame):
-        # 1. 在控制台打印（已通过 pd.set_option 设置显示全部内容）
-        print("--- 风险警示板块数据（全部显示） ---")
-        print(risk_board_df)
+# if __name__ == "__main__":
+#     # 获取风险警示板块数据
+#     risk_board_df = GetStockRiskAlertBoard()
+#     print(type(risk_board_df))
+#     if isinstance(risk_board_df, pd.DataFrame):
+#         # 1. 在控制台打印（已通过 pd.set_option 设置显示全部内容）
+#         print("--- 风险警示板块数据（全部显示） ---")
+#         print(risk_board_df)
         
-        # 2. 保存到 CSV 文件
-        write_stockdata_to_csv(risk_board_df, f'risk_alert_board_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
-    else:
-        print(risk_board_df)
+#         # 2. 保存到 CSV 文件
+#         write_stockdata_to_csv(risk_board_df, f'risk_alert_board_{datetime.datetime.now().strftime("%Y%m%d_%H%M%S")}.csv')
+#     else:
+#         print(risk_board_df)

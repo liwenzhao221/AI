@@ -1,6 +1,7 @@
 import akshare as ak
 import time
 
+# 财经早餐股票信息
 def Tool_Stock_Info_Cjzc_Em(max_retries=3, delay=2):
     """
     获取股票信息，并带有重试机制
