@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Optional, List
 
 # 导入本地模块
-from llm_model import get_llm
+from llm_model import get_llm, get_ollama_llm
 from tools.stock_tools import (
     fetch_financial_news_highlights,
     fetch_risk_alert_stocks,
@@ -24,6 +24,7 @@ from tools.stock_tools import (
 # LangChain 相关导入
 from langchain_classic.agents import AgentExecutor, create_openai_functions_agent
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain_core.messages import HumanMessage, AIMessage
 
 # --- 初始化 Agent ---
 
@@ -80,11 +81,15 @@ def main():
             ai_output = response["output"]
             print(f"\nAI：{ai_output}")
             
-            # 更新对话历史（可选）
-            # chat_history.extend([
-            #     ("human", user_input),
-            #     ("ai", ai_output)
-            # ])
+            # 更新对话历史
+            chat_history.extend([
+                HumanMessage(content=user_input),
+                AIMessage(content=ai_output)
+            ])
+            
+            # 限制历史长度（例如保留最近 10 次对话，即 20 条消息）
+            if len(chat_history) > 20:
+                chat_history = chat_history[-20:]
             
         except Exception as e:
             print(f"发生错误: {e}")
