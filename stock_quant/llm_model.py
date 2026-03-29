@@ -29,7 +29,7 @@ def get_ollama_llm(model_name: str = "qwen3.5:9b"):
 # response = llm.invoke("你好，请自我介绍")
 # print(response.content)
 
-if __name__ == "__main__":
-    llm_ollama = get_ollama_llm()
-    response = llm_ollama.invoke("为啥我用python调用你，感觉好慢才能得到回复呢")
-    print(response)
+# if __name__ == "__main__":
+#     llm_ollama = get_ollama_llm()
+#     response = llm_ollama.invoke("为啥我用python调用你，感觉好慢才能得到回复呢")
+#     print(response)

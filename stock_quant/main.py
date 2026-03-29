@@ -7,7 +7,7 @@ from datetime import datetime
 from typing import Optional, List
 
 # 导入本地模块
-from llm_model import get_llm, get_ollama_llm
+from llm_model import get_llm
 from tools.stock_tools import (
     fetch_financial_news_highlights,
     fetch_risk_alert_stocks,
@@ -56,8 +56,20 @@ def init_agent():
     return AgentExecutor(agent=agent, tools=tools, verbose=True)
 
 def main():
-    print("=== 欢迎使用 AI 股票分析系统 ===")
-    print("你可以输入类似：'帮我看看今天的财经新闻'、'分析一下 000001 的近期走势' 或 '有哪些 ST 股票值得注意' 等内容。输入 'exit' 退出。")
+    print("=" * 50)
+    print("      🚀 欢迎使用 AI 股票深度分析系统 🚀      ")
+    print("=" * 50)
+    print("你可以输入以下指令，或直接用自然语言与我交流：")
+    print("-" * 50)
+    print("1. 📰 宏观新闻：'帮我看看今天的财经新闻' 或 '成交早餐'")
+    print("2. 📉 个股分析：'分析一下 000001 的近期走势' 或 '查看某股票的新闻'")
+    print("3. ⚠️ 风险监控：'有哪些 ST 股票值得注意' (ST/*ST 板块)")
+    print("4. 👔 专家洞察：'2024年分析师排名' 或 '韩东分析师最近在跟踪哪些股票'")
+    print("5. 💾 批量处理：'批量保存 2024 年分析师详情数据'")
+    print("6. 📂 数据读取：'读取本地最新的财经新闻 CSV'")
+    print("-" * 50)
+    print("💡 提示：输入 'exit' 或 'quit' 即可退出系统。")
+    print("-" * 50)
     
     agent_executor = init_agent()
     chat_history = []
