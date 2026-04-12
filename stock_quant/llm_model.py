@@ -8,8 +8,8 @@ import os
 # 定义一个函数，用于获取LLM模型实例
 def get_llm():
     return ChatOpenAI(
-        model_name="gpt-4.1-free",
-        temperature=0.7,
+        model_name="gpt-5.4-nano",
+        temperature=0,# 该模型为主模型，需要理智判断无需太多想法
         max_tokens=2048,
         api_key="sk-i5lkQOkbqVkcDsKh01D8Ee84Ac85433fB57bD39d67B1C8A8",
         base_url="https://aihubmix.com/v1",
@@ -22,12 +22,14 @@ def get_ollama_llm(model_name: str = "qwen3.5:9b"):
     获取本地 Ollama 模型实例
     :param model_name: Ollama 模型名称，默认为 qwen3.5:9b
     :return: OllamaLLM 实例
+    :param temperature: 模型温度，默认为 0,为了更加理智分析数据，因为该模型主要作用就是清理数据
     """
-    return OllamaLLM(model=model_name, temperature=0.7, verbose=True)
+    return OllamaLLM(model=model_name, temperature=0, verbose=True)
 
-# llm = get_llm()
-# response = llm.invoke("你好，请自我介绍")
-# print(response.content)
+# 导出默认的主 LLM 实例
+llm = get_llm()
+# 导出本地 Ollama 实例用于摘要
+ollama_llm = get_ollama_llm()
 
 # if __name__ == "__main__":
 #     llm_ollama = get_ollama_llm()

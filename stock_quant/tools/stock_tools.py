@@ -19,6 +19,9 @@ from loaders.stock_analyst_rank import (
     batch_save_all_analysts_details as run_batch_save_analysts
 )
 
+# 导入本地模块
+from llm_model import get_ollama_llm
+
 @tool
 def fetch_financial_news_highlights():
     """
@@ -145,3 +148,47 @@ def batch_save_all_analysts_details(year: str = "2024", indicator: str = "最新
     """
     run_batch_save_analysts(year=year, indicator=indicator, limit=limit)
     return f"已成功启动批量保存任务，正在处理 {year} 年 {indicator} 数据。请查看控制台日志或 loaders 目录下的 CSV 文件。"
+
+@tool
+def local_intensive_reading(content: str):
+    """
+    【强制性深度清洗工具】当抓取的新闻、公告、分析师详情等原始文本超过 200 字时，必须且只能调用此工具进行本地摘要分析。
+    此工具集成了本地 Ollama (qwen3.5:9b) 的专业金融清洗模型，能从杂乱的原始数据中精准提取利好利空、股票名称和资金动向。
+    严禁主模型（GPT）直接处理超过 200 字的原始数据，必须先由本工具进行预处理。
+    :param content: 抓取到的长篇原始文本内容。
+    """
+    # 在工具内部实例化Ollama
+    llm_ollama = get_ollama_llm()
+    # 构造专门针对本地模型的指令
+    prompt = f"""
+    作为专业的金融数据分析员，请帮我分析对给你的信息进行清洗，并得出分析结果。
+    信息会有主模型传递给你，你需要根据信息进行分析。
+    最终反馈给主模型的内容要言简意赅。
+    要求：
+    - 提取核心利好/利空事件。
+    - 识别所有提及的股票代码或名称。
+    - 总结主力资金的动向（如有数据）。
+    原始信息如下：
+    {content[:8000]}  # 截取前8000字，防止本地显存溢出
+    """
+    try:
+        summary = llm_ollama.invoke(prompt)
+        return f"----本地模型（Ollama）深度分析报告-----\n{summary}"
+    except Exception as e:
+        return f"本地模型（Ollama）分析失败: {e}"
+
+# 定义所有工具的列表，供 LangGraph 等框架调用
+all_tools = [
+    fetch_financial_news_highlights,
+    fetch_risk_alert_stocks,
+    fetch_cjzc_news,
+    fetch_stock_kline,
+    fetch_individual_stock_news,
+    save_data_to_csv,
+    read_local_news_csv,
+    fetch_analyst_rank,
+    fetch_analyst_detail,
+    batch_save_all_analysts_details,
+    local_intensive_reading
+]
+  
